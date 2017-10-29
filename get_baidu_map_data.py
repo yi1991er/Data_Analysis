@@ -2,6 +2,7 @@ import requests
 import json
 import math
 import time
+#获得百度地图poi
 def get_store(bounds,query_word="便利店",tag="",page_size=20,page_num=0):
     url="http://api.map.baidu.com/place/v2/search"
     params={
