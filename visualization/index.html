@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="js/echarts.js"></script>
+		<script src="js/bmap.js"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=53oVIOgmSIejwV7EfphPgTynOZbIiVYu"></script>
+		<style type="text/css">
+			#main {
+				width: 600px;
+				height: 600px;
+				margin: 20px auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="main"></div>
+		<script type="text/javascript">
+			var myecharts = echarts.init($("div#main")[0])
+			$.get("data.json").done(function(data) {
+				var option = {
+					title: {
+						text: '',
+						left: 'center'
+					},
+					tooltip: {
+						trigger: 'item'
+					},
+					bmap: {
+						center: [116.403981, 39.915378],
+						zoom: 12,
+						roam: true,
+						mapStyle: {}
+					},
+					series: [{
+						name: '店家',
+						type: 'scatter',
+						coordinateSystem: 'bmap',
+						data: data,
+						symbolSize: function(val) {
+							return val[2] /10 ;
+						},
+						itemStyle: {
+							normal: {
+								color: 'red'
+							}
+						}
+					}, ]
+				};
+				myecharts.setOption(option)
+			});
+		</script>
+	</body>
+
+</html>
