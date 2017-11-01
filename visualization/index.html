@@ -5,13 +5,14 @@
 		<meta charset="utf-8" />
 		<title></title>
 		<script src="js/echarts.js"></script>
-		<script src="js/bmap.js"></script>
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=53oVIOgmSIejwV7EfphPgTynOZbIiVYu"></script>
+		<script src="js/bmap.js"></script>
+		
 		<style type="text/css">
 			#main {
-				width: 600px;
-				height: 600px;
+				width: 80%;
+				height: 800px;
 				margin: 20px auto;
 			}
 		</style>
@@ -21,7 +22,9 @@
 		<div id="main"></div>
 		<script type="text/javascript">
 			var myecharts = echarts.init($("div#main")[0])
+
 			$.get("data.json").done(function(data) {
+				console.log(data)
 				var option = {
 					title: {
 						text: '',
@@ -30,6 +33,9 @@
 					tooltip: {
 						trigger: 'item'
 					},
+					legend:{
+						data:["便利店","小卖部","超市","食品店"]
+					},
 					bmap: {
 						center: [116.403981, 39.915378],
 						zoom: 12,
@@ -37,21 +43,37 @@
 						mapStyle: {}
 					},
 					series: [{
-						name: '店家',
+						name: '便利店',
 						type: 'scatter',
 						coordinateSystem: 'bmap',
-						data: data,
+						data: data[0],
+					},  {
+						name: '小卖部',
+						type: 'scatter',
+						coordinateSystem: 'bmap',
+						data: data[1],
 						symbolSize: function(val) {
 							return val[2] /10 ;
 						},
-						itemStyle: {
-							normal: {
-								color: 'red'
-							}
-						}
-					}, ]
+					}, {
+						name: '超市',
+						type: 'scatter',
+						coordinateSystem: 'bmap',
+						data: data[2],
+						symbolSize: function(val) {
+							return val[2] /10 ;
+						},
+					}, {
+						name: '食品店',
+						type: 'scatter',
+						coordinateSystem: 'bmap',
+						data: data[3],
+						symbolSize: function(val) {
+							return val[2] /10 ;
+						},
+					},]
 				};
-				myecharts.setOption(option)
+				myecharts.setOption(option);
 			});
 		</script>
 	</body>
